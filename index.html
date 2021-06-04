@@ -55,6 +55,8 @@
     }
 
     function closed() {
+      liff.closeWindow();
+      liff.closeWindow()
     }
 
     async function scanCode() {
@@ -74,7 +76,7 @@
       document.getElementById("friendship").append(friend.friendFlag)
       if (!friend.friendFlag) {
         if (confirm("kun yung mai dai add bot is friend, add now?")) {
-          // window.Location = "https://line.me/R/ti/p/@@712hxesh"
+          window.Location = "https://line.me/R/ti/p/@712hxesh"
         }
       }
     }
@@ -101,12 +103,18 @@
     }
 
     async function getUserProfile() {
-      const profile = await liff.getUserProfile()
-      document.getElementById("pictureUrl").src = profile.pictureUrl()
-      document.getElementById("userId").append(profile.userId())
-      document.getElementById("statusMessage").append(profile.statusMessage())
-      document.getElementById("displayName").append(profile.displayName())
-      document.getElementById("decodedIDToken").append(liff.getDecodedIDToken.email)
+      // const profile = await liff.getUserProfile()
+      // document.getElementById("pictureUrl").src = profile.pictureUrl()
+      // document.getElementById("userId").append(profile.userId())
+      // document.getElementById("statusMessage").append(profile.statusMessage())
+      // document.getElementById("displayName").append(profile.displayName())
+      // document.getElementById("decodedIDToken").append(liff.getDecodedIDToken.email)
+      const profile = await liff.getProfile()
+      document.getElementById("pictureUrl").src = profile.pictureUrl
+      document.getElementById("userId").append(profile.userId)
+      document.getElementById("statusMessage").append(profile.statusMessage)
+      document.getElementById("displayName").append(profile.displayName)
+      document.getElementById("decodedIDToken").append(liff.getDecodedIDToken().email)
 
       // liff.getProfile().then(profile => {
       //   // const userProfile = profile.userId;
