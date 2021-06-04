@@ -56,7 +56,7 @@
       await liff.shareTargetPicker([
         {
           type: "text",
-          text: "This message was sent by ShareTargetPicker"
+          text: "ShareTargetPicker"
         }
       ])
     }
@@ -125,6 +125,8 @@
     }
     
     function getEnvironment() {
+      document.getElementById("isLoggedIn").append(liff.isLoggedIn())
+
       document.getElementById("os").append(liff.getOS())
       document.getElementById("language").append(liff.getLanguage())
       document.getElementById("version").append(liff.getVersion())
@@ -150,7 +152,6 @@
         } else {
           liff.login()
         }
-        document.getElementById("isLoggedIn").append(liff.isLoggedIn())
       })
       await liff.init({ liffId: "1656066409-kJn4Z9VA" })
     }
