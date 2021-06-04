@@ -88,7 +88,7 @@
     }
 
     async function getUserProfile() {
-      const profile = await liff.getProfile
+      const profile = await liff.getProfile()
       document.getElementById("pictureUrl").src = profile.pictureUrl
       document.getElementById("userId").append(profile.userId)
       document.getElementById("statusMessage").append(profile.statusMessage)
@@ -102,10 +102,6 @@
       //   // const statusMessage = profile.statusMessage;
       //   // const pictureUrl = profile.pictureUrl;
       //   // const email = liff.getDecodedIDToken().email;
-
-      //   document.getElementById("userId").append(profile.userId)
-      //   document.getElementById("statusMessage").append(liff.statusMessage)
-      //   document.getElementById("displayName").append(liff.displayName)
       // }).catch(
       //   err => console.error(err)
       // );
