@@ -67,7 +67,7 @@
     }
 
     async function sendMsg() {
-      if (liff.getContext().type != "none") {
+      if (liff.getContext.type != "none") {
         await liff.sendMessages([
           {
             "type": "sticker",
@@ -93,7 +93,7 @@
       document.getElementById("userId").append(profile.userId)
       document.getElementById("statusMessage").append(profile.statusMessage)
       document.getElementById("displayName").append(profile.displayName)
-      document.getElementById("decodedIDToken").append(liff.getDecodedIDToken().email)
+      document.getElementById("decodedIDToken").append(liff.getDecodedIDToken.email)
       
 
       // liff.getProfile().then(profile => {
