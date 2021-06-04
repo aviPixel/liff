@@ -146,11 +146,16 @@
     async function main() {
       // alert("LINE Developers x Skooldio")
       await liff.init({ liffId: "1656066409-kJn4Z9VA" })//1656066409-kJn4Z9VA     1655778746-8MDBj72E
-      getEnvironment()
-      getUserProfile()
-      getContext()
-      // getFriendship()
-      // createUniversalLink()
+      if (liff.isLoggedIn()) {
+        getEnvironment()
+        getUserProfile()
+        getContext()
+        // getFriendship()
+        // createUniversalLink()
+      } else {
+        liff.login()
+      }
+      
     }
     main()
   </script>
