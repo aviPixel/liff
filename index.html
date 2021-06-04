@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
-  <title>My LIFF app</title>
-  <link rel="stylesheet" href="css/style.css" media="all">
+  <title>My LIFF App</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <p id="os"><b>OS:</b> </p>
@@ -36,23 +35,35 @@
   <button id="btnLogOut" onclick="logOut()">Log Out</button>
   <button id="btnClose" onclick="closed()">Close</button>
 
-  <!-- <script src="js/vconsole.min.js"></script> -->
-  <!-- <script>
+  <script src="js/vconsole.min.js"></script>
+  <script>
     var vConsole = new VConsole()
     console.log("Hello World!")
-  </script> -->
+  </script>
 
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  <!-- <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script> -->
-  <!-- <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script> -->
   <script>
     function createUniversalLink() {
+      const link1 = liff.permanentLink.createUrl()
+      document.getElementById("universalLink1").append(link1)
+
+      liff.permanentLink.setExtraQueryParam('param=9')
+      const link2 = liff.permanentLink.createUrl()
+      document.getElementById("universalLink2").append(link2)
     }
 
     async function shareMsg() {
+      await liff.shareTargetPicker([
+        {
+          type: "text",
+          text: "This message was sent by ShareTargetPicker"
+        }
+      ])
     }
 
     function logOut() {
+      liff.logout()
+      window.location.reload()
     }
 
     function closed() {
@@ -63,7 +74,7 @@
       const result = await liff.scanCode()
       document.getElementById("scanCode").append(result.value)
     }
-
+    
     function openWindow() {
       liff.openWindow({
         url: "https://line.me",
@@ -72,68 +83,53 @@
     }
 
     async function getFriendship() {
-      const friend = await liff.getFriendship
+      const friend = await liff.getFriendship()
       document.getElementById("friendship").append(friend.friendFlag)
       if (!friend.friendFlag) {
-        if (confirm("kun yung mai dai add bot is friend, add now?")) {
-          window.Location = "https://line.me/R/ti/p/@712hxesh"
+        if (confirm("คุณยังไม่ได้เพิ่ม Bot เป็นเพื่อน จะเพิ่มเลยไหม?")) {
+          window.location = "https://line.me/R/ti/p/@712hxesh"
         }
       }
     }
 
     async function sendMsg() {
-      if (liff.getContext.type != "none") {
+      if (liff.getContext().type !== "none") {
         await liff.sendMessages([
           {
             "type": "sticker",
             "stickerId": 1,
-            "packageId": 1,
+            "packageId": 1
           }
         ])
-        alert("Message send")
+        alert("Message sent")
       }
     }
 
     function getContext() {
-      document.getElementById("type").append(liff.getContext().type)
-      document.getElementById("viewType").append(liff.getContext().viewType)
-      document.getElementById("utouId").append(liff.getContext().utouId)
-      document.getElementById("roomId").append(liff.getContext().roomId)
-      document.getElementById("groupId").append(liff.getContext().groupId)
+      if (liff.getContext() != null) {
+        document.getElementById("type").append(liff.getContext().type)
+        document.getElementById("viewType").append(liff.getContext().viewType)
+        document.getElementById("utouId").append(liff.getContext().utouId)
+        document.getElementById("roomId").append(liff.getContext().roomId)
+        document.getElementById("groupId").append(liff.getContext().groupId)
+      }
     }
 
     async function getUserProfile() {
-      // const profile = await liff.getUserProfile()
-      // document.getElementById("pictureUrl").src = profile.pictureUrl()
-      // document.getElementById("userId").append(profile.userId())
-      // document.getElementById("statusMessage").append(profile.statusMessage())
-      // document.getElementById("displayName").append(profile.displayName())
-      // document.getElementById("decodedIDToken").append(liff.getDecodedIDToken.email)
       const profile = await liff.getProfile()
       document.getElementById("pictureUrl").src = profile.pictureUrl
       document.getElementById("userId").append(profile.userId)
       document.getElementById("statusMessage").append(profile.statusMessage)
       document.getElementById("displayName").append(profile.displayName)
       document.getElementById("decodedIDToken").append(liff.getDecodedIDToken().email)
-
-      // liff.getProfile().then(profile => {
-      //   // const userProfile = profile.userId;
-      //   // const displayName = profile.displayName;
-      //   // const statusMessage = profile.statusMessage;
-      //   // const pictureUrl = profile.pictureUrl;
-      //   // const email = liff.getDecodedIDToken().email;
-      // }).catch(
-      //   err => console.error(err)
-      // );
     }
-
+    
     function getEnvironment() {
       document.getElementById("os").append(liff.getOS())
       document.getElementById("language").append(liff.getLanguage())
       document.getElementById("version").append(liff.getVersion())
       document.getElementById("accessToken").append(liff.getAccessToken())
       document.getElementById("isInClient").append(liff.isInClient())
-
       if (liff.isInClient()) {
         document.getElementById("btnLogOut").style.display = "none"
       } else {
@@ -144,18 +140,19 @@
     }
 
     async function main() {
-      // alert("LINE Developers x Skooldio")
-      await liff.init({ liffId: "1656066409-kJn4Z9VA" })//1656066409-kJn4Z9VA     1655778746-8MDBj72E
-      if (liff.isLoggedIn()) {
-        getEnvironment()
-        getUserProfile()
-        getContext()
-        // getFriendship()
-        // createUniversalLink()
-      } else {
-        liff.login()
-      }
-      
+      liff.ready.then(() => {
+        document.getElementById("isLoggedIn").append(liff.isLoggedIn())
+        if (liff.isLoggedIn()) {
+          getEnvironment()
+          getUserProfile()
+          getContext()
+          getFriendship()
+          createUniversalLink()
+        } else {
+          liff.login()
+        }
+      })
+      await liff.init({ liffId: "1656066409-kJn4Z9VA" })
     }
     main()
   </script>
