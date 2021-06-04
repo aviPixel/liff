@@ -42,8 +42,8 @@
     console.log("Hello World!")
   </script> -->
 
-  <!-- <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script> -->
-  <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+  <!-- <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script> -->
   <script>
     function createUniversalLink() {
     }
@@ -75,9 +75,9 @@
     async function getUserProfile() {
       const profile = await liff.getProfile()
       document.getElementById("pictureUrl").src = profile.pictureUrl()
-      // document.getElementById("userId").append(liff.userIduserId)
-      // document.getElementById("statusMessage").append(liff.statusMessage)
-      // document.getElementById("displayName").append(liff.displayName)
+      document.getElementById("userId").append(liff.userId)
+      document.getElementById("statusMessage").append(liff.statusMessage)
+      document.getElementById("displayName").append(liff.displayName)
 
       // liff.getProfile().then(profile => {
       //   // const userProfile = profile.userId;
